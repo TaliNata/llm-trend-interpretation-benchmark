@@ -1,61 +1,69 @@
-# Описание проекта
+# LLM Trend Interpretation Benchmark
 
-Этот репозиторий содержит эксперимент по сравнению поведения больших языковых моделей (LLM) 
-при интерпретации структурированных сигналов трендов в социальных медиа.
-Эксперимент фокусируется на LLM-блоке аналитического пайплайна, 
-где модель получает строго заданный структурированный вход с числовыми метриками 
-(частота упоминаний, рост, скорость, устойчивость) 
-и должна только интерпретировать сигнал, не изменяя входные данные и не добавляя новых фактов.
+## Обзор
+Бенчмарк-проект по сравнению поведения различных LLM в реальном аналитическом сценарии: интерпретация структурированных сигналов трендов из социальных медиа.
 
-Для обеспечения корректного сравнения все модели и версии тестируются:
-на идентичных входных данных,
-с одинаковыми системными и пользовательскими промптами,
-при фиксированных параметрах вызова.
-Эксперименты выполняются в оркестрированном workflow (n8n), 
-который используется исключительно как слой исполнения и логирования, 
-без влияния на содержимое запросов и ответов.
+## Сценарий
+Модели получают числовые метрики тренда (упоминания, рост, скорость, устойчивость) и должны сформировать краткую нейтральную интерпретацию (2–3 предложения) при строгих ограничениях:
+- без добавления новых фактов
+- без прогнозов
+- без маркетинговых формулировок
 
-# Цель проекта
+## Методология
+- Идентичные system и user prompts (v1)
+- Фиксированные параметры: temperature = 0.2, max_tokens = 120
+- Одинаковые входные сигналы для всех запусков
+- Отсутствие prompt tuning и post-processing
 
-Цель проекта — оценить различия между LLM-моделями и версиями с точки зрения их поведения в аналитическом контексте, а именно:
-способность строго следовать инструкциям и ограничениям;
-корректность интерпретации числовых сигналов без галлюцинаций;
-устойчивость аналитического стиля при одинаковом входе;
-склонность к спекулятивным или избыточным формулировкам;
-чувствительность к формату и роли, заданным в системном промпте.
+## Сравниваемые модели
+- openai/gpt-4o-mini (baseline)
+- anthropic/claude-3.5-sonnet
+- deepseek/deepseek-r1
 
-Проект ориентирован на сценарии реального использования LLM в продакшн-аналитике, 
-где модели выступают не как генераторы контента, 
-а как контролируемые аналитические компоненты внутри автоматизированного пайплайна.
+## Ключевые наблюдения
+- При идентичных ограничениях разные модели демонстрируют различающиеся аналитические стили.
+- Одни модели делают акцент на неопределённости, другие — на подтверждении метрик.
+- Выбор модели влияет на интерпретационное поведение в аналитических пайплайнах.
+
+## Структура репозитория
+- `baseline/` — эталонное поведение модели
+- `comparison/` — альтернативные модели при идентичных условиях
+- `comparison/conclusions.md` — детальные наблюдения и выводы
+
+## Назначение проекта
+Проект демонстрирует структурированную оценку LLM и сравнение моделей для аналитически ориентированных сценариев использования.
 
 ---
 
-# Project Description
+## Overview
+Benchmark project comparing the behavior of different LLMs in a real-world analytics scenario: interpretation of structured social media trend signals.
 
-This repository contains an experiment comparing the behavior of large language models (LLMs) 
-when interpreting structured trend signals from social media.
+## Scenario
+Models receive numerical trend metrics (mentions, growth, velocity, stability) and must produce a short, neutral interpretation (2–3 sentences) under strict constraints:
+- no new facts
+- no forecasts
+- no marketing language
 
-The experiment focuses on the LLM block within an analytical pipeline, where the model receives 
-a strictly defined structured input containing numerical metrics (mention frequency, growth, velocity, stability) 
-and is required only to interpret the signal, without modifying the input data or introducing new facts.
+## Methodology
+- Identical system and user prompts (v1)
+- Fixed parameters: temperature = 0.2, max_tokens = 120
+- Same input signals for all runs
+- No prompt tuning or post-processing
 
-To ensure a fair and controlled comparison, all models and versions are tested:
-on identical input data,
-using the same system and user prompts,
-with fixed invocation parameters.
+## Models Compared
+- openai/gpt-4o-mini (baseline)
+- anthropic/claude-3.5-sonnet
+- deepseek/deepseek-r1
 
-The experiments are executed within an orchestrated workflow (n8n), which is used solely as 
-an execution and logging layer and does not influence the content of the requests or responses.
+## Key Findings
+- Different models exhibit distinct analytical styles under identical constraints.
+- Some models emphasize uncertainty, others focus on metric confirmation.
+- Model choice impacts interpretative behavior in analytics pipelines.
 
-# Project Objective
+## Structure
+- `baseline/` — reference model behavior
+- `comparison/` — alternative models under identical conditions
+- `comparison/conclusions.md` - detailed observations and conclusions.
 
-The objective of this project is to evaluate differences between LLM models and versions 
-in terms of their behavior in an analytical context, specifically:
-the ability to strictly follow instructions and constraints;
-the correctness of numerical signal interpretation without hallucinations;
-the consistency of analytical style given identical inputs;
-the tendency toward speculative or excessive wording;
-sensitivity to format and role definitions provided in the system prompt.
-
-The project is designed for real-world LLM production analytics scenarios, 
-where models function not as content generators, but as controlled analytical components within automated pipelines.
+## Purpose
+Demonstrates structured LLM evaluation and model comparison for analytics-oriented use cases.
