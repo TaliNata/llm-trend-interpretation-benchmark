@@ -8,7 +8,7 @@ Baseline отражает исходное поведение модели пр�
 
 ## Конфигурация
 
-- Модель: deepseek-r1-0528:free
+- Модель: openai/gpt-4o-mini
 - Сценарий: интерпретация тренда
 - Версия промпта: v1
 - Temperature: 0.2
@@ -33,7 +33,7 @@ All later observations are evaluated relative to this baseline.
 
 ## Baseline Configuration
 
-- Model: deepseek-r1-0528:free
+- Model: openai/gpt-4o-mini
 - Scenario: Trend interpretation (single structured signal)
 - Prompt version: v1
 - Temperature: 0.2
